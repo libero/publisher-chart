@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}--article-store
+  labels:
+    {{- include "publisher.labels" . | nindent 4 }}
+    app.kubernetes.io/component: article-store
+spec:
+  selector:
+    matchLabels:
+      {{- include "publisher.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: article-store
+  template:
+    metadata:
+      labels:
+        {{- include "publisher.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: article-store
+    spec:
+      containers:
+        - name: app
+          image: "{{ .Values.images.articleStore.repository }}:latest"
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http

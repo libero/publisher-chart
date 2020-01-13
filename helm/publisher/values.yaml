@@ -1,0 +1,4 @@
+images:
+  articleStore:
+    repository: liberoadmin/article-store
+  pullPolicy: IfNotPresent
