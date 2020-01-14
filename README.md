@@ -15,6 +15,22 @@ The chart is intended for installation on environments supporting the developmen
 
 The chart can be forked and adapted liberally to create a new deployment solution, as it reflects a production-ready architecture.
 
+Usage
+-----
+
+Install or upgrade a release named `publisher--test` in the default namespace:
+
+```
+cd helm/
+helm upgrade -i publisher--test publisher/
+```
+
+Install or upgrade in a chosen namespace:
+```
+cd helm/
+helm upgrade -n my-namespace -i publisher--test publisher/
+```
+
 Getting help
 ------------
 

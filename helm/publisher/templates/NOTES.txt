@@ -4,6 +4,6 @@ kubectl get deployment -lapp.kubernetes.io/instance={{ .Release.Name }}
 
 2. Access the article-store at this URL:
 
-export NODE_HOST=$(kubectl get node -o jsonpath='{.items[0].status.addresses[?(@.type=="ExternalDNS")].address}')
-export NODE_PORT=$(kubectl get service publisher--test--article-store -o jsonpath='{.spec.ports[0].nodePort}')
+export NODE_HOST=$(kubectl get --namespace {{ .Release.Namespace }} node -o jsonpath='{.items[0].status.addresses[?(@.type=="ExternalDNS")].address}')
+export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} service publisher--test--article-store -o jsonpath='{.spec.ports[0].nodePort}')
 echo "http://${NODE_HOST}:${NODE_PORT}"
