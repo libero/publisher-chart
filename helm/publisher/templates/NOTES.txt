@@ -7,3 +7,7 @@ kubectl get deployment -lapp.kubernetes.io/instance={{ .Release.Name }}
 export NODE_HOST=$(kubectl get --namespace {{ .Release.Namespace }} node -o jsonpath='{.items[0].status.addresses[?(@.type=="ExternalDNS")].address}')
 export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} service publisher--test--article-store -o jsonpath='{.spec.ports[0].nodePort}')
 echo "http://${NODE_HOST}:${NODE_PORT}"
+
+3. Smoke test the article-store with:
+
+helm test {{ .Release.Name }}

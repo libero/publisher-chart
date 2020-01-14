@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}--article-store-test
+  annotations:
+    "helm.sh/hook": test
+spec:
+  template:
+    spec:
+      containers:
+        - name: main
+          image: busybox
+          command: ["wget", "http://{{ .Release.Name }}--article-store", "-o", "/dev/null"]
+      restartPolicy: Never
