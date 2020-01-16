@@ -9,9 +9,24 @@ on:
 
 jobs:
 
-  checkout:
+  lint:
 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Run chart-testing (lint)
+        id: lint
+        run: |
+            docker run \
+            -v $(pwd):/charts \
+            -w /charts \
+            quay.io/helmpack/chart-testing:v3.0.0-beta.1 \
+            ct lint \
+            --chart-dirs=helm \
+            --all \
+            --validate-maintainers=false \
+            --debug
+

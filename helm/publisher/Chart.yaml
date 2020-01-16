@@ -2,5 +2,7 @@ apiVersion: v2
 name: publisher
 description: Libero Publisher vanilla flavor
 type: application
+home: https://github.com/libero/publisher
+icon: https://cdn.elifesciences.org/libero/logo/libero-logo-96px.svg
 version: 0.1.0
 appVersion: latest
