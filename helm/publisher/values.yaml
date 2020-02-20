@@ -1,4 +1,9 @@
 images:
   articleStore:
     repository: liberoadmin/article-store
-  pullPolicy: IfNotPresent
+
+postgresql:
+  nameOverride: article-store-postgresql
+  persistence:
+    enabled: false
+  postgresqlPassword: pAsSw0rD

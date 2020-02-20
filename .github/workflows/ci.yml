@@ -26,6 +26,7 @@ jobs:
             quay.io/helmpack/chart-testing:v3.0.0-beta.1 \
             ct lint \
             --chart-dirs=helm \
+            --chart-repos stable=https://kubernetes-charts.storage.googleapis.com/ \
             --all \
             --validate-maintainers=false \
             --debug

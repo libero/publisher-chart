@@ -24,3 +24,22 @@ Selector labels
 app.kubernetes.io/name: {{ .Chart.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
+
+{{/*
+Default article store app envvars
+*/}}
+{{- define "publisher.articleStoreAppEnv" -}}
+- name: DATABASE_NAME
+  value: "{{ .Values.postgresql.postgresqlDatabase }}"
+- name: DATABASE_USER
+  value: "{{ .Values.postgresql.postgresqlUsername }}"
+- name: DATABASE_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: "{{ .Release.Name }}-article-store-postgresql"
+      key: postgresql-password
+- name: DATABASE_HOST
+  value: "{{ .Release.Name }}-article-store-postgresql"
+- name: DATABASE_PORT
+  value: "{{ .Values.postgresql.service.port }}"
+{{- end -}}

@@ -9,7 +9,6 @@ This repository contains a functional Helm chart for the deployment of Libero Pu
 The product is set up with a vanilla configuration:
 
 - a single `article-store`
-- an Hypermedia console
 
 The chart is intended for installation on environments supporting the development of Libero products. Direct reuse of this chart from other organizations is not supported.
 
@@ -18,17 +17,23 @@ The chart can be forked and adapted liberally to create a new deployment solutio
 Usage
 -----
 
-Install or upgrade a release named `publisher--test` in the default namespace:
+First, build the chart:
 
 ```
-cd helm/
-helm upgrade -i publisher--test publisher/
+helm repo add stable https://kubernetes-charts.storage.googleapis.com
+helm dependency build helm/publisher
 ```
 
-Install or upgrade in a chosen namespace:
+Then to install or upgrade a release named `publisher--test` in the default namespace:
+
 ```
-cd helm/
-helm upgrade -n my-namespace -i publisher--test publisher/
+helm upgrade -i publisher--test helm/publisher
+```
+
+Or to install or upgrade in a chosen namespace:
+
+```
+helm upgrade -n my-namespace -i publisher--test helm/publisher
 ```
 
 Getting help

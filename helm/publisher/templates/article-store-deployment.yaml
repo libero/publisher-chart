@@ -19,7 +19,8 @@ spec:
       containers:
         - name: app
           image: "{{ .Values.images.articleStore.repository }}:latest"
-          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          env:
+            {{- include "publisher.articleStoreAppEnv" . | nindent 12 }}
           ports:
             - name: http
               containerPort: 8080
@@ -32,3 +33,9 @@ spec:
             httpGet:
               path: /
               port: http
+      initContainers:
+        - name: app-database-schema
+          image: "{{ .Values.images.articleStore.repository }}:latest"
+          args: [npm, run, initdb]
+          env:
+            {{- include "publisher.articleStoreAppEnv" . | nindent 12 }}
