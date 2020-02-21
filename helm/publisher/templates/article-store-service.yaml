@@ -4,9 +4,10 @@ metadata:
   name: {{ .Release.Name }}--article-store
   labels:
     {{- include "publisher.labels" . | nindent 4 }}
-    app.kubernetes.io/component: client
+    app.kubernetes.io/component: article-store
+    external-dns.alpha.kubernetes.io/hostname: {{ .Release.Name }}--article-store.libero.pub
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - targetPort: http
       port: 80
