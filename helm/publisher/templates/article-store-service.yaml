@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "publisher.labels" . | nindent 4 }}
     app.kubernetes.io/component: article-store
+  annotations:
     external-dns.alpha.kubernetes.io/hostname: {{ .Release.Name }}--article-store.libero.pub
 spec:
   type: LoadBalancer
