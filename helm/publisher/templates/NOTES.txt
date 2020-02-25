@@ -5,9 +5,9 @@ kubectl get deployment -lapp.kubernetes.io/instance={{ .Release.Name }}
 2. Access the article-store at this URL:
 
 if [[ ! -z "$(kubectl get pods -l app.kubernetes.io/name=external-dns -o jsonpath='{.items[*].metadata.name}')" ]]; then
-  export SERVICE_HOST=$(kubectl get --namespace publisher service publisher--test--article-store -o jsonpath='{.metadata.annotations.external-dns\.alpha\.kubernetes\.io/hostname}')
+  export SERVICE_HOST=$(kubectl get --namespace {{ .Release.Namespace }} service {{ .Release.Name }}--article-store -o jsonpath='{.metadata.annotations.external-dns\.alpha\.kubernetes\.io/hostname}')
 else
-  export SERVICE_HOST=$(kubectl get --namespace publisher service publisher--test--article-store -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export SERVICE_HOST=$(kubectl get --namespace {{ .Release.Namespace }} service {{ .Release.Name }}--article-store -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 fi
 echo "http://${SERVICE_HOST}"
 
