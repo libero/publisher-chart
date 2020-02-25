@@ -4,9 +4,12 @@ kubectl get deployment -lapp.kubernetes.io/instance={{ .Release.Name }}
 
 2. Access the article-store at this URL:
 
-export NODE_HOST=$(kubectl get --namespace {{ .Release.Namespace }} node -o jsonpath='{.items[0].status.addresses[?(@.type=="ExternalDNS")].address}')
-export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} service publisher--test--article-store -o jsonpath='{.spec.ports[0].nodePort}')
-echo "http://${NODE_HOST}:${NODE_PORT}"
+if [[ ! -z "$(kubectl get pods -l app.kubernetes.io/name=external-dns -o jsonpath='{.items[*].metadata.name}')" ]]; then
+  export SERVICE_HOST=$(kubectl get --namespace publisher service publisher--test--article-store -o jsonpath='{.metadata.annotations.external-dns\.alpha\.kubernetes\.io/hostname}')
+else
+  export SERVICE_HOST=$(kubectl get --namespace publisher service publisher--test--article-store -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+fi
+echo "http://${SERVICE_HOST}"
 
 3. Smoke test the article-store with:
 
