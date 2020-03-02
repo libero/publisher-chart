@@ -1,0 +1,3 @@
+postgresql:
+  enabled: false
+  secretName: publisher--test-rds-article-store-postgresql

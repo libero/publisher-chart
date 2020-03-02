@@ -3,7 +3,9 @@ images:
     repository: liberoadmin/article-store
 
 postgresql:
+  enabled: true
   nameOverride: article-store-postgresql
   persistence:
     enabled: false
   postgresqlPassword: pAsSw0rD
+  secretName: null

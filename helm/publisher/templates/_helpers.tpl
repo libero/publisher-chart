@@ -29,6 +29,33 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Default article store app envvars
 */}}
 {{- define "publisher.articleStoreAppEnv" -}}
+{{- if .Values.postgresql.secretName -}}
+- name: DATABASE_NAME
+  valueFrom:
+    secretKeyRef:
+      name: "{{ .Values.postgresql.secretName }}"
+      key: postgresql-database
+- name: DATABASE_USER
+  valueFrom:
+    secretKeyRef:
+      name: "{{ .Values.postgresql.secretName }}"
+      key: postgresql-username
+- name: DATABASE_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: "{{ .Values.postgresql.secretName }}"
+      key: postgresql-password
+- name: DATABASE_HOST
+  valueFrom:
+    secretKeyRef:
+      name: "{{ .Values.postgresql.secretName }}"
+      key: postgresql-host
+- name: DATABASE_PORT
+  valueFrom:
+    secretKeyRef:
+      name: "{{ .Values.postgresql.secretName }}"
+      key: postgresql-port
+{{- else -}}
 - name: DATABASE_NAME
   value: "{{ .Values.postgresql.postgresqlDatabase }}"
 - name: DATABASE_USER
@@ -42,4 +69,5 @@ Default article store app envvars
   value: "{{ .Release.Name }}-article-store-postgresql"
 - name: DATABASE_PORT
   value: "{{ .Values.postgresql.service.port }}"
+{{- end -}}
 {{- end -}}
