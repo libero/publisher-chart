@@ -11,6 +11,15 @@ else
 fi
 echo "http://${SERVICE_HOST}"
 
-3. Smoke test the article-store with:
+3. Access the article-page at this URL:
+
+if [[ ! -z "$(kubectl get pods -l app.kubernetes.io/name=external-dns -o jsonpath='{.items[*].metadata.name}')" ]]; then
+  export SERVICE_HOST=$(kubectl get --namespace {{ .Release.Namespace }} service {{ .Release.Name }}--article-page -o jsonpath='{.metadata.annotations.external-dns\.alpha\.kubernetes\.io/hostname}')
+else
+  export SERVICE_HOST=$(kubectl get --namespace {{ .Release.Namespace }} service {{ .Release.Name }}--article-page -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+fi
+echo "http://${SERVICE_HOST}"
+
+4. Smoke test the services with:
 
 helm test {{ .Release.Name }}

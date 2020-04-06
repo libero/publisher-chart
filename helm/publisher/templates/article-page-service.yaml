@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}--article-page
+  labels:
+    {{- include "publisher.labels" . | nindent 4 }}
+    app.kubernetes.io/component: article-page
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: {{ .Release.Name }}--article-page.libero.pub
+spec:
+  type: LoadBalancer
+  ports:
+    - targetPort: http
+      port: 80
+      protocol: TCP
+  selector:
+    {{- include "publisher.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: article-page

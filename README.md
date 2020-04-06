@@ -9,6 +9,7 @@ This repository contains a functional Helm chart for the deployment of Libero Pu
 The product is set up with a vanilla configuration:
 
 - a single `article-store`
+- a single `article-page`
 
 The chart is intended for installation on environments supporting the development of Libero products. Direct reuse of this chart from other organizations is not supported.
 

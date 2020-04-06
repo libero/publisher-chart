@@ -1,6 +1,8 @@
 images:
   articleStore:
     repository: liberoadmin/article-store
+  articlePage:
+    repository: liberoadmin/article-page
 
 postgresql:
   enabled: true
